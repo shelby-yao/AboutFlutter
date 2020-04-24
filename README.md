@@ -1,7 +1,7 @@
 
 # Flutter学习笔记
-##Flutter基础
-###1.StatelessWidget - 生命周期
+## Flutter基础
+### 1.StatelessWidget - 生命周期
 StatelessWidget 的生命周期只有一个，就是 build
 build 是用来创建 Widget 的，但因为 build 在每次界面刷新的时候都会调用，所以不要在 build 里写业务逻辑，可以把业务逻辑写到你的 StatelessWidget 的构造函数里。
 * 无状态的Widget
@@ -10,7 +10,7 @@ build 是用来创建 Widget 的，但因为 build 在每次界面刷新的时�
 
 StatelessWidget一旦创建就不会发生变化,定义属性值可以变化,但不会重新渲染UI
 
-###2.StatefulWidget - 生命周期
+### 2.StatefulWidget - 生命周期
 * 构造函数
 * initState
 * didChangeDependencies
@@ -26,7 +26,7 @@ state发生变化时会重新渲染UI，类似于Hot Reload
 更新/刷新操作：setState(() {});
 createState 此方法返回状态管理类，进行关联
 
-###3.WidgetsBinding.instance.addPostFrameCallback
+### 3.WidgetsBinding.instance.addPostFrameCallback
 addPostFrameCallback 是 StatefulWidget 渲染结束的回调，只会被调用一次，之后 StatefulWidget 需要刷新 UI 也不会被调用，
 addPostFrameCallback 的使用方法是在 initState 里添加回调：
 ```
@@ -65,10 +65,10 @@ Vector3 vector3 = renderObject.getTransformTo(null)?.getTranslation();
 //位置(vector3.x,vector3.y)
 ```
 
-###声明式UI介绍
+### 声明式UI介绍
 [声明式UI](https://flutter.cn/docs/get-started/flutter-for/declarative)
 
-###dart构造方法
+### dart构造方法
 1.不写extends默认继承自Object
 系统将提供最基本的构造方法如Person()
 如果定义自己的构造方法Person(this.name, this.age)
@@ -150,8 +150,8 @@ class Student extends Person {
 
 
 
-##flutter混合
-###flutter混合项目集成
+## flutter混合
+### flutter混合项目集成
 1.工程目录创建
 xxx/flutter_hybrid/
 flutter_hybrid作为大的文件目录,下一级放flutter_module文件夹与native工程文件夹
@@ -193,7 +193,7 @@ pod install拉取Flutter需要添加的配置
 
 3.禁用Native主工程的Bitcode(Flutter不支持)
 
-###flutter混合项目实现热重载(基于native项目可运行状态下)
+### flutter混合项目实现热重载(基于native项目可运行状态下)
 1.模拟器关闭项目
 2.vscode终端在flutter_module目录下
 ```
@@ -207,17 +207,17 @@ flutter attach -d 'xxx'//xxx为设备号
 `Done.
 Syncing files to device `
 即可在vscode实现r热重载R热重启o系统切换
-###特别注意
+### 特别注意
 1.xcode启动主项目后如果启动的是真机,若想切换为模拟器启动则必须删除ios目录下App.framework文件,反之亦然
 2.vscode更改了flutter代码若需要在xcode中重启主项目则必须删除App.framework并pod install才可运行最新的flutter代码.
 
-###flutter与iOS原生相互跳转
-#####准备工作:
+### flutter与iOS原生相互跳转
+##### 准备工作:
 1.flutter工程引入flutter_boost对应版本的插件(插件版本根据flutter版本参照github要求)
 2.iOS工程在podfile中以引用本地库的方式引用第一步中packages get下来的flutter_boost插件(已有Step1与Step2该步骤可省略)
 eg: 
 `pod 'flutter_boost', :path => '../flutter_module/.ios/Flutter/.symlinks/flutter_boost/ios'`
-#####1.原生 push/present FlutterVC
+##### 1.原生 push/present FlutterVC
 1.在原生端创建一个路由实现类
 `class PlatformRouterImp: NSObject, FLBPlatform`
 用以实现路由跳转协议
@@ -260,7 +260,7 @@ FlutterBoostPlugin.sharedInstance().startFlutter(with: router, onStart: { (engin
         }
 ```
 闭包为新flutter页面打开的回调
-#####2.FlutterVC push/present FlutterVC
+##### 2.FlutterVC push/present FlutterVC
 1.flutter端创建一个目标widage
 并且注册路由
 ``'second': (pageName, params, _) => SecondRouteWidget(params: params)`
@@ -275,7 +275,7 @@ FlutterBoost.singleton.open("second",urlParams:<dynamic,dynamic>{"title":"true",
     print("call me when page is finished. did recieve second route result $value");});
 ```
 then后面为新flutter页面打开的回调
-#####3.FlutterVC push/present 原生
+##### 3.FlutterVC push/present 原生
 1.PlatformRouterImp 协议方法 实现open/present 时实现flutter跳转原生的拦截
 ```
 if let nativeVC = exts["isNative"] as? String, nativeVC == "YellowVC" {
@@ -285,8 +285,8 @@ if let nativeVC = exts["isNative"] as? String, nativeVC == "YellowVC" {
             }
         }
 ```
-###flutter与iOS原生相互传值
-####1.flutter端close
+### flutter与iOS原生相互传值
+#### 1.flutter端close
 flutter端
 ```
 FlutterBoost.singleton.close("id", result: <dynamic, dynamic>{
@@ -303,7 +303,7 @@ func close(_ uid: String, result: [AnyHashable : Any], exts: [AnyHashable : Any]
 上result(map)对应下result
 上若忽略exts则默认为[animated:1]
 
-####2.flutter端传值
+#### 2.flutter端传值
 flutter端发送
 ```
 FlutterBoost.singleton.channel.sendEvent("flutter2native",
@@ -320,7 +320,7 @@ let pp = FlutterBoostPlugin.sharedInstance().addEventListener({ (name: String?, 
 其中name字段(flutter2native)只有对应在原生端才能够接收到此次传值内容
 闭包中的name也是传值的name
 其中pp为一个注销闭包,需要在控制器销毁的时候调用pp()注销监听
-####3.原生端传值
+#### 3.原生端传值
 原生端发送
 ```
 FlutterBoostPlugin.sharedInstance().sendEvent("native2flutter", arguments: ["message": "xxxxxxx"]);
@@ -335,7 +335,7 @@ flutter端接收
 这两个name必须对应flutter端才能够成功接收
 其中pp为一个注销闭包,需要在控制器销毁的时候调用pp()注销监听
 
-##模型
+## 模型
 [Json数据生成模型代码](https://www.devio.org/io/tools/json-to-dart/)
 
 多级模型转换例子
