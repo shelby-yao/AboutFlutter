@@ -20,7 +20,7 @@ StatelessWidget一旦创建就不会发生变化,定义属性值可以变化,但
 * deactivate
 * dispose
 
-![](imageBag/1.png)
+![生命周期](imageBag/1.png)
 
 state发生变化时会重新渲染UI，类似于Hot Reload
 更新/刷新操作：setState(() {});
