@@ -1045,7 +1045,8 @@ FloatingActionButton:浮动按钮
 | highlightColor | Color | 点击（长按）按钮后按钮的颜色 |
 | elevation | double | 阴影的范围，值越大阴影范围越大 |
 | padding |   | 内边距 |
-| shape |   | 设置按钮的形状 shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(10), )shape: CircleBorder( side: BorderSide( color: Colors.white, ) )|
+| shape |   | 设置按钮的形状 shape: RoundedRectangleBorder( bo
+rderRadius: BorderRadius.circular(10), )shape: CircleBorder( side: BorderSide( color: Colors.white, ) )|
 
 
 ### TextField 文本框组件

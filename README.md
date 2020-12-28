@@ -200,6 +200,9 @@ pod install拉取Flutter需要添加的配置
 flutter attach
 //或者
 flutter attach -d 'xxx'//xxx为设备号
+//或者
+flutter attach --app-id xxxx//xxxx为iOS BundleID
+
 ```
 当终端出现`Waiting for a connection from Flutter on DEVICE`之后
 主工程启动,进入flutter页面
